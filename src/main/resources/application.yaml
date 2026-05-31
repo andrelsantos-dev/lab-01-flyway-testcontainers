@@ -1,3 +1,9 @@
 spring:
   application:
     name: flyway-testcontainers
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+  flyway:
+    enabled: true

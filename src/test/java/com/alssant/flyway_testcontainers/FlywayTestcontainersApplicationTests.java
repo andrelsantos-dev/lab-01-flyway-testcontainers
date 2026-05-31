@@ -1,5 +1,7 @@
 package com.alssant.flyway_testcontainers;
 
+import com.alssant.flyway_testcontainers.customer.Customer;
+import com.alssant.flyway_testcontainers.customer.CustomerRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +10,9 @@ import org.springframework.context.annotation.Import;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Import(TestcontainersConfiguration.class)
@@ -16,6 +20,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class FlywayTestcontainersApplicationTests {
 	@Autowired
 	private DataSource dataSource;
+
+	@Autowired
+	private CustomerRepository repository;
 
 	@Test
 	void contextLoads() {
@@ -43,6 +50,20 @@ class FlywayTestcontainersApplicationTests {
 
 			assertTrue(rs.next());
 		}
+	}
+
+	@Test
+	void shouldSaveCustomer() {
+
+		Customer customer =
+				new Customer(
+						UUID.randomUUID(),
+						"Andre"
+				);
+
+		repository.save(customer);
+
+		assertEquals(1, repository.count());
 	}
 
 
