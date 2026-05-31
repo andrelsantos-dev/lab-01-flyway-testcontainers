@@ -66,6 +66,22 @@ class FlywayTestcontainersApplicationTests {
 		assertEquals(1, repository.count());
 	}
 
+	@Test
+	void shouldShowCurrentDatabaseUser() throws Exception {
+
+		try (Connection connection = dataSource.getConnection()) {
+
+			var rs = connection.createStatement()
+					.executeQuery("select current_user");
+
+			rs.next();
+
+			System.out.println(
+					"Current user = " + rs.getString(1)
+			);
+		}
+	}
+
 
 
 }
