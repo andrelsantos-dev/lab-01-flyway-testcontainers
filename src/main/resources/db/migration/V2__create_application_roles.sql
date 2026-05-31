@@ -1,0 +1,1 @@
+CREATE ROLE app_user LOGIN PASSWORD 'app_password';

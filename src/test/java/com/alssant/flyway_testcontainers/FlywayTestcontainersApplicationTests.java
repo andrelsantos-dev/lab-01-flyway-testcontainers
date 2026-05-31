@@ -82,6 +82,40 @@ class FlywayTestcontainersApplicationTests {
 		}
 	}
 
+	@Test
+	void shouldShowCustomerTableOwner() throws Exception {
+
+		try (Connection connection = dataSource.getConnection()) {
+
+			var rs = connection.createStatement().executeQuery("""
+            SELECT tableowner
+            FROM pg_tables
+            WHERE tablename = 'customer'
+        """);
+
+			rs.next();
+
+			System.out.println(
+					"Customer owner = " + rs.getString(1)
+			);
+		}
+	}
+
+	@Test
+	void shouldCreateAppUser() throws Exception {
+
+		try (Connection connection = dataSource.getConnection()) {
+
+			var rs = connection.createStatement().executeQuery("""
+            SELECT rolname
+            FROM pg_roles
+            WHERE rolname = 'app_user'
+        """);
+
+			assertTrue(rs.next());
+		}
+	}
+
 
 
 }
