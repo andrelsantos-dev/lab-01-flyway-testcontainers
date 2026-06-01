@@ -1,0 +1,3 @@
+GRANT SELECT, INSERT, UPDATE, DELETE
+    ON TABLE customer
+    TO app_user;
